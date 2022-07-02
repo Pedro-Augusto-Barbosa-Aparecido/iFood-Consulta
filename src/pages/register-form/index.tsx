@@ -4,6 +4,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { MdAlternateEmail, MdDriveFileRenameOutline } from "react-icons/md";
 
 import api from "../../apis/api";
+import axios from "axios";
 
 export default function RegisterForm () {
     const [name, setName] = useState<string>("");
@@ -23,9 +24,9 @@ export default function RegisterForm () {
 
         console.log(user);
 
-        // api.post("/register", {
-
-        // });
+        api.post("/api/auth/register", {
+            user
+        }).then(response => response.data).then(data => console.log(data));
 
     }
 
