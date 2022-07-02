@@ -11,7 +11,10 @@ export interface ProductList {
   description: string
   price: number
   isSold: boolean
-  creatorName: string
+  creator: {
+    name: string
+    email: string
+  }
 
 }
 
@@ -24,6 +27,7 @@ const Home: NextPage = () => {
   useEffect(() => {
     api.post("/api/product/get-all", { userId: user ? user.id : "" }).then((res) => {
       setProduct(res.data.products);
+      console.log(res.data.products)
       setTotalProducts(res.data.total);
     })
   }, [user]);
@@ -44,15 +48,17 @@ const Home: NextPage = () => {
           </div> 
         
         }
-        { products.map((product, index) => {
+        { user && products.map((product, index) => {
           return (
             <Card 
               key={index}
-              creatorName={product.creatorName}
+              creatorName={product.creator.name}
+              productId={product.id}
               name={product.name} 
               price={product.price}
               isSold={product.isSold} 
               description={product.description} 
+              creatorEmail={user.email}
             />
           );
         }) }

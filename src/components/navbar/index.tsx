@@ -1,4 +1,3 @@
-import style from "./styles.module.css";
 import Link from "next/link";
 import { useContext } from "react";
 import { AuthContext } from "../../context/auth";
@@ -20,12 +19,19 @@ export default function NavBar() {
     return (
         <nav className={`flex w-screen items-center justify-end px-4 py-2 h-16 bg-red-400`}>
             <div className="flex items-center justify-between w-full">
-                <p className="text-2xl">Ichiraku Rámen</p>
+                <Link href="/">
+                    <a className="text-2xl">Ichiraku Rámen</a>
+                </Link>
                 {
                     isAuthentication ?
-                    <button onClick={handleLogout} className="text-xl text-center px-6">
-                        Sign Out
-                    </button> :
+                    <div>
+                        <Link href="/store">
+                            <a className="text-2xl mr-8 cursor-pointer active:cursor-default">Comprar</a>
+                        </Link>
+                        <button onClick={handleLogout} className="text-xl text-center mr-16 px-6">
+                            Sign Out
+                        </button>
+                    </div> :
                     <Link href={"/login"}>
                         <a className="px-8 text-xl">Login</a>
                     </Link> 
