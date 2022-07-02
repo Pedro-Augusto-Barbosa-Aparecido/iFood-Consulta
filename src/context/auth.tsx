@@ -19,11 +19,19 @@ export type SignTypeReturn = {
     msg: string
 }
 
+export type SignInOnRegisterType = { 
+    email: string
+    user: User
+    token: string 
+
+}
+
 export type AuthContextType = {
     isAuthentication: boolean
     user: User | null
     signIn: (data: SignInDataParams) => Promise<void>
     destroyUserInfo: () => void
+    signInOnRegister: (data: SignInOnRegisterType) => void
 
 }
 
@@ -57,8 +65,6 @@ export const AuthProvider = ({ children }: { children: any }) => {
             setCookie(undefined, 'auth.token', response.token, { maxAge: 60 * 60 * 1 /* 1 hora */ });
             setCookie(undefined, 'auth.email', email, { maxAge: 60 * 60 * 1 /* 1 hora */ });
             setUser(response.user);
-            
-            console.log(response);
 
             Router.push("/");
 
@@ -69,8 +75,17 @@ export const AuthProvider = ({ children }: { children: any }) => {
         
     }
 
+    const signInOnRegister = ({ email, user, token }: SignInOnRegisterType) => {
+        setCookie(undefined, 'auth.token', token, { maxAge: 60 * 60 * 1 /* 1 hora */ });
+        setCookie(undefined, 'auth.email', email, { maxAge: 60 * 60 * 1 /* 1 hora */ });
+        setUser(user);
+
+        Router.push("/");
+
+    }
+
     return (
-        <AuthContext.Provider value={{ isAuthentication, user, signIn, destroyUserInfo }}>
+        <AuthContext.Provider value={{ isAuthentication, user, signIn, destroyUserInfo, signInOnRegister }}>
             { children }
         </AuthContext.Provider>
     );

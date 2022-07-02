@@ -1,10 +1,11 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useContext, useState } from "react";
 import Link from "next/link";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { MdAlternateEmail, MdDriveFileRenameOutline } from "react-icons/md";
 
 import api from "../../apis/api";
 import axios from "axios";
+import { AuthContext } from "../../context/auth";
 
 export default function RegisterForm () {
     const [name, setName] = useState<string>("");
@@ -12,6 +13,7 @@ export default function RegisterForm () {
     const [password, setPassword] = useState<string>("");
 
     const [viewPass, setViewPass] = useState<boolean>(false);
+    const { signInOnRegister } = useContext(AuthContext);
 
     const handleSubmit = (event: FormEvent) => {
         event.preventDefault();
@@ -26,7 +28,9 @@ export default function RegisterForm () {
 
         api.post("/api/auth/register", {
             user
-        }).then(response => response.data).then(data => console.log(data));
+        }).then(response => response.data).then(data => {
+            signInOnRegister({ email: data.email, token: data.token, user: data.user });
+        });
 
     }
 
