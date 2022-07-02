@@ -1,16 +1,20 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, useContext } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { MdAlternateEmail, MdDriveFileRenameOutline } from "react-icons/md";
+import { MdAlternateEmail } from "react-icons/md";
 import Link from "next/link";
+import { AuthContext } from "../../context/auth";
 
 export default function Login () {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
 
     const [viewPass, setViewPass] = useState<boolean>(false);
+    const { signIn } = useContext(AuthContext);
 
-    const handleSubmit = (event: FormEvent) => {
+    const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
+        console.log(typeof signIn)
+        await signIn({ email: email, password: password });
 
     }
 
@@ -30,7 +34,7 @@ export default function Login () {
                         name="email" 
                         onChange={event => setEmail(event.target.value)}
                     />
-                    <MdDriveFileRenameOutline 
+                    <MdAlternateEmail 
                         className="absolute bottom-7 opacity-30 right-4"
                         size={20}
                     />
