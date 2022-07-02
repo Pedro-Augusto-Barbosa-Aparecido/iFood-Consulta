@@ -10,6 +10,7 @@ export default async function handler (req: NextApiRequest, res: NextApiResponse
         },
         select: {
             password: true,
+            id: true,
             name: true
         }
     });
@@ -27,6 +28,7 @@ export default async function handler (req: NextApiRequest, res: NextApiResponse
             success: true,
             user: {
                 name: _user.name,
+                id: _user.id,
                 email: email
             },
             msg: "Usuário logado com  sucesso!"

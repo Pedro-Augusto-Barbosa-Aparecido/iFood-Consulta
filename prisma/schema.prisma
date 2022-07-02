@@ -14,8 +14,20 @@ datasource db {
 }
 
 model User {
-  id       String @id @default(uuid())
+  id       String    @id @default(uuid())
   name     String
   email    String
   password String
+  products Product[]
+}
+
+model Product {
+  id          String  @id @default(uuid())
+  name        String
+  price       Float
+  description String?
+  isSold      Boolean
+  creator     User    @relation(fields: [userId], references: [id])
+
+  userId String
 }

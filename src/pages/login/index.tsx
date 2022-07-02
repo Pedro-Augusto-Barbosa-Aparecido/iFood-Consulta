@@ -13,7 +13,6 @@ export default function Login () {
 
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
-        console.log(typeof signIn)
         await signIn({ email: email, password: password });
 
     }

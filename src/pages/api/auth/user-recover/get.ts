@@ -3,13 +3,15 @@ import { prismaClient } from "../../../../utils/prisma";
 
 export default async function handler (req: NextApiRequest, res: NextApiResponse) {
     const { email } = req.body;
+    
     const user = await prismaClient.user.findFirst({
         where: {
-            email: email
+            id: email
         },
         select: {
             name: true,
-            email: true
+            email: true,
+            id: true
         }
     });
 

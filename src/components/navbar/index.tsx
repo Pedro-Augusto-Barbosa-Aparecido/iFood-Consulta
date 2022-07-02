@@ -10,6 +10,7 @@ export default function NavBar() {
 
     const handleLogout = async () => {
         destroyCookie(undefined, 'auth.token', {path: '/'});
+        destroyCookie(undefined, 'auth.id', {path: '/'});
         destroyUserInfo();
 
         Router.push("/login");

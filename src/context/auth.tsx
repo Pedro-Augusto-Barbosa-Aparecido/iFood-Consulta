@@ -6,6 +6,7 @@ import Router from "next/router";
 export type User = {
     name: string
     email: string
+    id: string
 
 }
 
@@ -42,12 +43,12 @@ export const AuthProvider = ({ children }: { children: any }) => {
     const isAuthentication =!!user;
 
     useEffect(() => {
-        const { "auth.token": token, "auth.email": email } = parseCookies();
+        const { "auth.token": token, "auth.id": email } = parseCookies();
 
         if (token) {
-            api.get("/api/auth/user-recover/get", { data: {
+            api.post("/api/auth/user-recover/get", {
                 email
-            }}).then((res) => {
+            }).then((res) => {
                 setUser(res.data.user);
             });
         }
@@ -63,7 +64,7 @@ export const AuthProvider = ({ children }: { children: any }) => {
 
         if (response.success) {
             setCookie(undefined, 'auth.token', response.token, { maxAge: 60 * 60 * 1 /* 1 hora */ });
-            setCookie(undefined, 'auth.email', email, { maxAge: 60 * 60 * 1 /* 1 hora */ });
+            setCookie(undefined, 'auth.id', response.user.id, { maxAge: 60 * 60 * 1 /* 1 hora */ });
             setUser(response.user);
 
             Router.push("/");
@@ -77,7 +78,7 @@ export const AuthProvider = ({ children }: { children: any }) => {
 
     const signInOnRegister = ({ email, user, token }: SignInOnRegisterType) => {
         setCookie(undefined, 'auth.token', token, { maxAge: 60 * 60 * 1 /* 1 hora */ });
-        setCookie(undefined, 'auth.email', email, { maxAge: 60 * 60 * 1 /* 1 hora */ });
+        setCookie(undefined, 'auth.id', user.id, { maxAge: 60 * 60 * 1 /* 1 hora */ });
         setUser(user);
 
         Router.push("/");

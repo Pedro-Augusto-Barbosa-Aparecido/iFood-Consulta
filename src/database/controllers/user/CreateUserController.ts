@@ -35,7 +35,8 @@ export default class CreateUserController {
                 data: user,
                 select: {
                     name: true,
-                    email: true
+                    email: true,
+                    id: true
                 }
             });
     
