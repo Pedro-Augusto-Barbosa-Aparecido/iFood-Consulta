@@ -7,11 +7,11 @@ export default function Profile () {
 
 }
 
-export const getStaticProps: GetStaticProps = async () => {
-    return {
-        props: {
+// export const getStaticProps: GetStaticProps = async () => {
+//     return {
+//         props: {
 
-        },
-        revalidate: 60 * 2 * 1 // 2 minutos
-    }
-}
+//         },
+//         revalidate: 60 * 2 * 1 // 2 minutos
+//     }
+// }
