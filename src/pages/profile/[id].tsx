@@ -1,5 +1,6 @@
 import { GetStaticPaths, GetStaticProps } from "next";
 import { useRouter } from "next/router";
+import { TailSpin } from "react-loader-spinner";
 import Card from "../../components/card";
 import { prismaClient } from "../../utils/prisma";
 import { VerifyCookies } from "../../utils/verifierCookies";
@@ -26,9 +27,13 @@ type UserProfileProps = {
 export default function Profile ({ user }: { user: UserProfileProps }) {
     const { isFallback } = useRouter();
 
+    if (isFallback)
+        return (
+            <TailSpin />
+        );
+
     return (
         <main className="flex w-full h-full items-center justify-center">
-            { isFallback && <p>Carregando...</p> }
             <div className="w-2/3 mt-16 border-2 p-4 rounded-md border-black">
                 <h1 className="text-2xl">{ user.name }</h1>
                 <hr className="my-8" /> 
@@ -43,7 +48,7 @@ export default function Profile ({ user }: { user: UserProfileProps }) {
                             <span>Você não vendeu nenhum produto ainda</span>
                         </div> 
                     }
-                    <div className="flex items-start justify-start w-full flex-row-wrap">
+                    <div className="flex items-start justify-start w-full flex-wrap">
                         {
                             user.products_sold.map(prod => {
                                 return <Card
@@ -73,7 +78,7 @@ export default function Profile ({ user }: { user: UserProfileProps }) {
                             <span>Você não têm produtos para vender</span>
                         </div> 
                     }
-                    <div className="flex items-start justify-start w-full flex-row-wrap">
+                    <div className="flex items-start justify-start w-full flex-wrap">
                         {
                             user.products_sell.map(prod => {
                                 return <Card
