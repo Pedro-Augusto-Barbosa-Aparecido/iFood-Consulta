@@ -28,12 +28,12 @@ export default function NavBar() {
                         <Link href="/store">
                             <a className="text-2xl mr-8 cursor-pointer active:cursor-default">Comprar</a>
                         </Link>
+                        <Link href={`/profile/${user?.id}`}>
+                            <a className="text-2xl mr-8 cursor-pointer active:cursor-default">Perfil</a>
+                        </Link>
                         <button onClick={handleLogout} className="text-xl text-center mr-16 px-6">
                             Sign Out
                         </button>
-                        <Link href={`/profile/${user?.id}`}>
-                            <a>Perfil</a>
-                        </Link>
                     </div> :
                     <Link href={"/login"}>
                         <a className="px-8 text-xl">Login</a>

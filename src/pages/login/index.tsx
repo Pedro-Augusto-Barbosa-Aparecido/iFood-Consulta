@@ -3,6 +3,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { MdAlternateEmail } from "react-icons/md";
 import Link from "next/link";
 import { AuthContext } from "../../context/auth";
+import NProgress from "nprogress";
 
 export default function Login () {
     const [email, setEmail] = useState<string>("");
@@ -13,7 +14,9 @@ export default function Login () {
 
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
+        NProgress.start();
         await signIn({ email: email, password: password });
+        NProgress.done();
 
     }
 

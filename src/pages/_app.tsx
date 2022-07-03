@@ -5,6 +5,8 @@ import Head from 'next/head';
 import { AuthProvider } from '../context/auth';
 import NextNProgress from 'nextjs-progressbar';
 
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <AuthProvider>

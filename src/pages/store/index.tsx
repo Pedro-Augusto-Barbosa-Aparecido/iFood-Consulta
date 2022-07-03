@@ -7,14 +7,19 @@ import { AuthContext } from "../../context/auth";
 import api from "../../apis/api";
 import NProgress from "nprogress";
 
+import { BiSearch } from "react-icons/bi";
+
 export default function Store ({ products, total }: { products: ProductListQuery[], total: number }) {
     const [totalProducts, setTotalProducts] = useState<number>(total);
     const [productsShow, setProductsShow] = useState<ProductListQuery[]>(products);
     const handleSell = () => {
+        NProgress.start();
+        setProductsShow([]);
         api.post("/api/product/get-all", { onlyToSell: true }).then(res => {
             setProductsShow(res.data.products);
             setTotalProducts(res.data.total);
         });
+        NProgress.done();
 
     }
 
@@ -41,7 +46,18 @@ export default function Store ({ products, total }: { products: ProductListQuery
         <main>
             <div className="flex ml-4 mt-8 items-center justify-between mr-4">
                 <h1 className="text-2xl">Compre aqui...</h1>
-                <h2 className="text-md mt-1 text-gray-500">Quantidade de produtos a venda: { totalProducts }</h2>
+                <div className="flex w-96 justify-between items-center">
+                    <h2 className="text-md mt-1 text-gray-500">Quantidade de produtos a venda: { totalProducts }</h2>
+                    <div 
+                        className="mt-1 mr-3 flex items-center justify-center bg-yellow-400 p-3 rounded-md active:scale-90 active:cursor-default hover:opacity-80 hover:cursor-pointer"
+                        onClick={handleSell}
+                    >
+                        <BiSearch 
+                            className="text-md mr-2"
+                        />
+                        <button className="text-md">Search</button>
+                    </div>
+                </div>
             </div>
             <div className="flex items-start justify-start flex-wrap">
             { 
@@ -56,7 +72,7 @@ export default function Store ({ products, total }: { products: ProductListQuery
                 productsShow.map((product, index) => {
                     return (
                         <Card
-                            key={index}
+                            key={product.id}
                             creatorName={product.creator.name}
                             description={product.description || ""}
                             isSold={product.isSold}

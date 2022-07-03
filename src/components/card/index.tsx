@@ -1,7 +1,6 @@
 import { RiMoneyDollarCircleLine } from "react-icons/ri";
 import { MdOutlineSell, MdSell } from "react-icons/md";
-import api from "../../apis/api";
-import NProgress from "nprogress";
+import { memo } from "react";
 export interface CardProps {
   name: string;
   description: string;
@@ -15,7 +14,7 @@ export interface CardProps {
   button?: JSX.Element
 }
 
-export default function Card(props: CardProps) {
+function CardComponent(props: CardProps) {
     return (
         <div className="flex flex-col justify-center p-8 border-2 w-80 m-4 border-black rounded-md h-fit">
             <span className="text-2xl">{props.name}</span>
@@ -45,3 +44,7 @@ export default function Card(props: CardProps) {
         </div>
     );
 }
+
+const Card = memo(CardComponent);
+
+export default Card;

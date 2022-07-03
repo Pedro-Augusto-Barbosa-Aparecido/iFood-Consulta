@@ -36,6 +36,7 @@ export default class CreateProductController {
             }
 
         } catch(err) {
+            console.log(err)
             return {
                 success: false,
                 err
