@@ -9,6 +9,7 @@ export type ProductListQuery = {
     description: string | null
     isSold: boolean
     price: number
+    id?: string
     creator: {
         id: string,
         name: string,
@@ -35,6 +36,46 @@ export default class GetProductController {
                 }
               },
               select: {
+                id: true,
+                name: true,
+                description: true,
+                price: true,
+                isSold: true,
+                creator: {
+                    select: {
+                        name: true,
+                        email: true,
+                        id: true
+                    }
+                }
+              }  
+            });
+
+            return {
+                success: true,
+                products: _products
+            }
+
+        } catch (err) {
+            console.log(err)
+            return {
+                success: false,
+                products: [],
+                err
+            }
+
+        }
+
+    }
+
+    async all (): Promise<ProductListReturn> {
+        try {
+            const _products = await prismaClient.product.findMany({
+              where: {
+                isSold: false
+              },
+              select: {
+                id: true,
                 name: true,
                 description: true,
                 price: true,

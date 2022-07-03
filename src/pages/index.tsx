@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from 'react';
 import api from '../apis/api';
 import Card from '../components/card';
 import { AuthContext } from '../context/auth';
+import { VerifyCookies } from '../utils/verifierCookies';
 
 export interface ProductList {
   id: string
@@ -27,7 +28,6 @@ const Home: NextPage = () => {
   useEffect(() => {
     api.post("/api/product/get-all", { userId: user ? user.id : "" }).then((res) => {
       setProduct(res.data.products);
-      console.log(res.data.products)
       setTotalProducts(res.data.total);
     })
   }, [user]);
@@ -59,6 +59,7 @@ const Home: NextPage = () => {
               isSold={product.isSold} 
               description={product.description} 
               creatorEmail={user.email}
+              possibleBuyer={""}
             />
           );
         }) }
@@ -69,7 +70,7 @@ const Home: NextPage = () => {
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { ["auth.token"]: token } = parseCookies(ctx);
+  const token = VerifyCookies(ctx);
 
   if (!token) {
     return {

@@ -5,7 +5,7 @@ import { destroyCookie } from "nookies";
 import Router from "next/router";
 
 export default function NavBar() {
-    const { isAuthentication, destroyUserInfo } = useContext(AuthContext);
+    const { isAuthentication, destroyUserInfo, user } = useContext(AuthContext);
 
     const handleLogout = async () => {
         destroyCookie(undefined, 'auth.token', {path: '/'});
@@ -31,6 +31,9 @@ export default function NavBar() {
                         <button onClick={handleLogout} className="text-xl text-center mr-16 px-6">
                             Sign Out
                         </button>
+                        <Link href={`/profile/${user?.id}`}>
+                            <a>Perfil</a>
+                        </Link>
                     </div> :
                     <Link href={"/login"}>
                         <a className="px-8 text-xl">Login</a>
