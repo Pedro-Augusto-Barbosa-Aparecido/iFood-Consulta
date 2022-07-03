@@ -45,6 +45,14 @@ export default function Store ({ products, total }: { products: ProductListQuery
             </div>
             <div className="flex items-start justify-start flex-wrap">
             { 
+                totalProducts === 0 && 
+                <div className="w-full px-12 text-center">
+                    <hr className="mt-12 mb-12" />
+                    <span className="text-2xl text-gray-500">Não há produtos para vender!</span>
+                    <hr className="mt-12" />
+                </div> 
+            }
+            { 
                 productsShow.map((product, index) => {
                     return (
                         <Card
